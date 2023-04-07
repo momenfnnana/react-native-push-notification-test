@@ -101,13 +101,13 @@ const AppStack = observer(function AppStack() {
     }
   }, [status])
 
-  useEffect(() => {
-    Geolocation.setRNConfiguration({
-      skipPermissionRequests: false,
-      authorizationLevel: "auto",
-      locationProvider: "auto",
-    })
-  }, [])
+  // useEffect(() => {
+  //   Geolocation.setRNConfiguration({
+  //     skipPermissionRequests: false,
+  //     authorizationLevel: "auto",
+  //     locationProvider: "auto",
+  //   })
+  // }, [])
 
   // @demo remove-block-end
   return (
