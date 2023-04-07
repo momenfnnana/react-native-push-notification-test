@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "776865833523",
+    "project_id": "captain-380317",
+    "storage_bucket": "captain-380317.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776865833523:android:d92bb0dfeb5bd884f37946",
+        "android_client_info": {
+          "package_name": "com.salam.captain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776865833523-2obm4guqd07pb6u7uffan9o8d34pdnag.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx9f_UJeW2eV_J1aWyGU8xogLOD7PCEx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776865833523-2obm4guqd07pb6u7uffan9o8d34pdnag.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "776865833523-6jdu68qls7sdg68bdoa0fq9okahcrak8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Captain-Mob-App",
+                "app_store_id": "6446223673"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
