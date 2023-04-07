@@ -1,0 +1,157 @@
+import {
+  HomeCardProps,
+  NewTripCardProps,
+  OrderCardProps,
+  ShipmentCardProps,
+  StatisticsCardProps,
+} from "components"
+
+export const dashboardCaptain: HomeCardProps[] = [
+  {
+    customerAddress: "الخليل - الشموخ الشارع الاول",
+    orderTravelId: 55123,
+    paidAmount: 12.0,
+    restaurantMapLocation: [21, 35],
+    restaurantName: "اسم المطعم",
+    total: 44.0,
+    travelCost: 32.0,
+    travelDistance: "25كم",
+  },
+  {
+    customerAddress: "الخليل - الشموخ الشارع الاول",
+    orderTravelId: 55123,
+    paidAmount: 12.0,
+    restaurantMapLocation: null,
+    restaurantName: "اسم المطعم",
+    total: 44.0,
+    travelCost: 32.0,
+    travelDistance: "25كم",
+  },
+  {
+    customerAddress: "الخليل - الشموخ الشارع الاول",
+    orderTravelId: 55123,
+    paidAmount: 12.0,
+    restaurantMapLocation: null,
+    restaurantName: "اسم المطعم",
+    total: 44.0,
+    travelCost: 32.0,
+    travelDistance: "25كم",
+  },
+]
+export const newTripsData: NewTripCardProps[] | any[] = [
+  {
+    orderTravelId: 6,
+    restaurantName: "فانيلا",
+    restaurantAddress: "bethlahem",
+    restaurantMapLocation: null,
+    customerAddress: "87878",
+    customerMapLocation: "ramallah",
+    travelDistance: 0.0,
+    travelCost: 2.0,
+    paidAmount: 0.0,
+    requiredTotal: 2.0,
+    paymentTypeId: 3134,
+    paymentTypeName: "test",
+  },
+  {
+    orderTravelId: 10,
+    restaurantName: "مطعم أنجلوس",
+    restaurantAddress: "rammallah",
+    restaurantMapLocation: "686.00,99.00",
+    customerAddress: "main-syreet",
+    customerMapLocation: "ramallah",
+    travelDistance: 0.0,
+    travelCost: 80.0,
+    paidAmount: 0.0,
+    requiredTotal: 80.0,
+    paymentTypeId: 3142,
+    paymentTypeName: "visa",
+  },
+  {
+    orderTravelId: 11,
+    restaurantName: "مطعم أنجلوس",
+    restaurantAddress: "rammallah",
+    restaurantMapLocation: "686.00,99.00",
+    customerAddress: "jesruslem",
+    customerMapLocation: "main street",
+    travelDistance: 0.0,
+    travelCost: 90.0,
+    paidAmount: 0.0,
+    requiredTotal: 90.0,
+    paymentTypeId: 3154,
+    paymentTypeName: "Electronic Wallet",
+  },
+  {
+    orderTravelId: 12,
+    restaurantName: "مطعم أنجلوس",
+    restaurantAddress: "rammallah",
+    restaurantMapLocation: "686.00,99.00",
+    customerAddress: "main-syreet",
+    customerMapLocation: "ramallah",
+    travelDistance: 0.0,
+    travelCost: 90.0,
+    paidAmount: 0.0,
+    requiredTotal: 90.0,
+    paymentTypeId: 3142,
+    paymentTypeName: "visa",
+  },
+]
+
+export const cardData: StatisticsCardProps[] = [
+  {
+    title: "الطلبات",
+    value: "755",
+    percentage: 20,
+    IconName: "order",
+  },
+  {
+    title: "مجموع الطلبات",
+    value: "$6,840",
+    percentage: -25,
+    IconName: "total",
+  },
+  {
+    title: "الرصيد",
+    value: "$840",
+    percentage: -10,
+    IconName: "account",
+  },
+  {
+    title: "حالة اخر شحنة",
+    value: "68%",
+    IconName: "status",
+  },
+]
+
+export const orderInfo = {
+  clientName: "Mohammed Alarmed",
+  orderNo: "1100",
+  date: "03/07/2023",
+  costAndfees: "($100) $2,499",
+  typeBill: "فاتورة كاملة",
+  location: "الخليل - الشموخ",
+}
+
+export const callData = [
+  {
+    callId: "1",
+    callFrom: "محمد الاحمدي",
+    callStatus: "accepted",
+    date: "03/07/2023",
+    notes: "توضع الملاحظات هنا",
+  },
+  {
+    callId: "1",
+    callFrom: "محمد الاحمدي",
+    callStatus: "rejected",
+    date: "03/07/2023",
+    notes: "توضع الملاحظات هنا",
+  },
+  {
+    callId: "1",
+    callFrom: "محمد الاحمدي",
+    callStatus: "rejected",
+    date: "03/07/2023",
+    notes: "توضع الملاحظات هنا",
+  },
+]
