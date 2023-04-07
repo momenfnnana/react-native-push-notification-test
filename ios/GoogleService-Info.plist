@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>184430459427-fr1siocmp7iok3hfnmi5jnsfbq68jfc2.apps.googleusercontent.com</string>
+	<string>776865833523-6jdu68qls7sdg68bdoa0fq9okahcrak8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.184430459427-fr1siocmp7iok3hfnmi5jnsfbq68jfc2</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>184430459427-d0n49k8nhnneun8n2i9hv1bt86d29n4a.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.776865833523-6jdu68qls7sdg68bdoa0fq9okahcrak8</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCAwczPGYqZDlkMa2tivNl8IktHffh4q2c</string>
+	<string>AIzaSyDtNLS6k1TOsv_OM49u1YNNVTo-zdKvPqw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>184430459427</string>
+	<string>776865833523</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.salam.captain</string>
+	<string>Captain-Mob-App</string>
 	<key>PROJECT_ID</key>
-	<string>captin-f09dc</string>
+	<string>captain-380317</string>
 	<key>STORAGE_BUCKET</key>
-	<string>captin-f09dc.appspot.com</string>
+	<string>captain-380317.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:184430459427:ios:97349b8e9ddfa3f3040f96</string>
+	<string>1:776865833523:ios:cd840a83b90af16bf37946</string>
 </dict>
 </plist>
