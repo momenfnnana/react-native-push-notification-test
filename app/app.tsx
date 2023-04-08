@@ -25,7 +25,7 @@ import { DefaultTheme, Provider as PaperProvider, useTheme } from "react-native-
 import { QueryClient, QueryClientProvider } from "react-query"
 import { readAccessToken } from "utils/constants"
 import { setAxiosAccessToken } from "utils/axiosConfig"
-import { useAccessToken } from "hooks/useAccessToken"
+// import { useAccessToken } from "hooks/useAccessToken"
 import { PermissionsAndroid, Platform, Text } from "react-native"
 import messaging from "@react-native-firebase/messaging"
 // Set up Reactotron, which is a free desktop app for inspecting and debugging
@@ -91,7 +91,7 @@ function App(props: AppProps) {
   const {
     authenticationStore: { setAccessToken },
   } = useStores()
-  const { accessToken } = useAccessToken()
+  // const { accessToken } = useAccessToken()
   const {
     initialNavigationState,
     onNavigationStateChange,
@@ -110,14 +110,14 @@ function App(props: AppProps) {
     setTimeout(hideSplashScreen, 500)
   })
 
-  useEffect(() => {
-    readAccessToken().then((accessToken) => {
-      if (accessToken) {
-        setAxiosAccessToken(accessToken)
-        setAccessToken(accessToken)
-      }
-    })
-  }, [accessToken])
+  // useEffect(() => {
+  //   readAccessToken().then((accessToken) => {
+  //     if (accessToken) {
+  //       setAxiosAccessToken(accessToken)
+  //       setAccessToken(accessToken)
+  //     }
+  //   })
+  // }, [accessToken])
   // async function requestUserPermission() {
   //   if (Platform.OS === "ios") {
   //     const authStatus = await messaging().requestPermission()

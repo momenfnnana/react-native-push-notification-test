@@ -6,5 +6,5 @@
  * https://reactnative.dev/docs/security#storing-sensitive-info
  */
 export default {
-  API_URL: "http://captain.salam-it.com/api/",
+  API_URL: "https://captain.salam-it.com/api/",
 }

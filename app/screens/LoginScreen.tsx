@@ -1,8 +1,18 @@
-import React, { FC, useState, useEffect } from "react"
-import { observer } from "mobx-react-lite"
-import { Image, ImageBackground, useWindowDimensions, View, ViewStyle } from "react-native"
-import { StackScreenProps } from "@react-navigation/stack"
-import { AppStackParamList, AppStackScreenProps, LoginNavigationProp } from "@navigators"
+import React, {FC, useState, useEffect} from 'react';
+import {observer} from 'mobx-react-lite';
+import {
+  Image,
+  ImageBackground,
+  useWindowDimensions,
+  View,
+  ViewStyle,
+} from 'react-native';
+import {StackScreenProps} from '@react-navigation/stack';
+import {
+  AppStackParamList,
+  AppStackScreenProps,
+  LoginNavigationProp,
+} from '@navigators';
 import {
   AutoImage,
   Button,
@@ -13,20 +23,20 @@ import {
   Toggle,
   AuthScreen,
   Loader,
-} from "@components"
-import { colors, spacing } from "@theme"
-import Logo from "../../assets/images/logo.png"
-import UndrawLogin from "../../assets/images/undraw_login.png"
-import AuthBackground from "../../assets/images/authBackground.png"
-import { useNavigation } from "@react-navigation/native"
-import { useStores } from "@models"
-import { CaptainImage } from "@assets"
-import { useMutation } from "react-query"
-import { login, LoginBody } from "@services"
-import { useFormik } from "formik"
-import * as Yup from "yup"
-import { useAccessToken } from "hooks/useAccessToken"
-import { setAxiosAccessToken } from "@utils"
+} from '@components';
+import {colors, spacing} from '@theme';
+import Logo from '../../assets/images/logo.png';
+import UndrawLogin from '../../assets/images/undraw_login.png';
+import AuthBackground from '../../assets/images/authBackground.png';
+import {useNavigation} from '@react-navigation/native';
+import {useStores} from '@models';
+import {CaptainImage} from '@assets';
+import {useMutation} from 'react-query';
+import {login, LoginBody} from '@services';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
+import {useAccessToken} from 'hooks/useAccessToken';
+import {setAxiosAccessToken} from '@utils';
 // import messaging from "@react-native-firebase/messaging"
 
 // STOP! READ ME FIRST!
@@ -39,39 +49,39 @@ import { setAxiosAccessToken } from "@utils"
 // REMOVE ME! ⬇️ This TS ignore will not be necessary after you've added the correct navigator param type
 // @ts-ignore
 
-export const LoginScreen: FC<StackScreenProps<AppStackScreenProps, "Login">> = observer(
-  function LoginScreen() {
-    const [isRemmber, setRemmber] = useState<boolean>(false)
-    const { reload } = useAccessToken()
-    const { height } = useWindowDimensions()
+export const LoginScreen: FC<StackScreenProps<AppStackScreenProps, 'Login'>> =
+  observer(function LoginScreen() {
+    const [isRemmber, setRemmber] = useState<boolean>(false);
+    const {reload} = useAccessToken();
+    const {height} = useWindowDimensions();
     // Pull in navigation via hook
-    const { navigate } = useNavigation<LoginNavigationProp>()
+    const {navigate} = useNavigation<LoginNavigationProp>();
     // Pull in one of our MST stores
     const {
-      authenticationStore: { setAccessToken },
-    } = useStores()
-    const { mutate, isLoading } = useMutation(login, {
-      onSuccess(data) {
+      authenticationStore: {setAccessToken},
+    } = useStores();
+    const {mutate, isLoading} = useMutation(login, {
+      onSuccess(data: any) {
         if (data.data.accessToken) {
-          setAccessToken(data.data.accessToken)
-          setAxiosAccessToken(data.data.accessToken)
-          reload(data.data.accessToken)
-          navigate("Demo")
+          setAccessToken(data.data.accessToken);
+          setAxiosAccessToken(data.data.accessToken);
+          reload(data.data.accessToken);
+          navigate('Demo');
         }
       },
-    })
+    });
     const initialValues: LoginBody = {
-      Username: "salam-cs@hotmail.com",
-      Password: "Salam@123",
+      Username: 'salam-cs@hotmail.com',
+      Password: 'Salam@123',
       RememberMe: false,
-      NotificationToken: "",
-    }
+      NotificationToken: '',
+    };
 
     const validationSchema = Yup.object().shape({
       Username: Yup.string().required(),
       Password: Yup.string().required(),
       RememberMe: Yup.boolean().required(),
-    })
+    });
 
     const onSubmitHandler = (values: LoginBody) => {
       mutate({
@@ -79,17 +89,23 @@ export const LoginScreen: FC<StackScreenProps<AppStackScreenProps, "Login">> = o
         Password: values.Password,
         RememberMe: values.RememberMe,
         NotificationToken: values.NotificationToken,
-      })
-    }
-    const { values, handleChange, handleBlur, handleSubmit, setFieldValue, errors } =
-      useFormik<LoginBody>({
-        initialValues,
-        onSubmit: onSubmitHandler,
-        validationSchema,
-      })
+      });
+    };
+    const {
+      values,
+      handleChange,
+      handleBlur,
+      handleSubmit,
+      setFieldValue,
+      errors,
+    } = useFormik<LoginBody>({
+      initialValues,
+      onSubmit: onSubmitHandler,
+      validationSchema,
+    });
 
     useEffect(() => {
-      ;(async () => {
+      (async () => {
         // const granted = await messaging().requestPermission()
         // if (granted) {
         //   messaging().registerDeviceForRemoteMessages().then(response=>{
@@ -101,106 +117,111 @@ export const LoginScreen: FC<StackScreenProps<AppStackScreenProps, "Login">> = o
         //     console.log({error});
         //   })
         // }
-      })()
-    }, [])
+      })();
+    }, []);
 
     if (isLoading) {
-      return <Loader isPageLoading />
+      return <Loader isPageLoading />;
     }
 
     return (
       <AuthScreen>
-        <View style={[$container, { height }]}>
+        <View style={[$container, {height}]}>
           <Card
-            style={{ paddingVertical: 20, paddingHorizontal: 10 }}
+            style={{paddingVertical: 20, paddingHorizontal: 10}}
             ContentComponent={
               <>
                 <Image
                   source={CaptainImage}
                   resizeMode="contain"
-                  style={{ width: 170, height: 170, alignSelf: "center" }}
+                  style={{width: 170, height: 170, alignSelf: 'center'}}
                 />
-                <Text tx="loginScreen.welcome" preset="heading" style={{ textAlign: "center" }} />
+                <Text
+                  tx="loginScreen.welcome"
+                  preset="heading"
+                  style={{textAlign: 'center'}}
+                />
                 <Text
                   tx="loginScreen.description"
-                  style={{ textAlign: "center", marginBottom: 20, fontSize: 14 }}
+                  style={{textAlign: 'center', marginBottom: 20, fontSize: 14}}
                 />
                 <TextField
                   labelTx="labelForm.name"
                   value={values.Username}
-                  onChangeText={handleChange("Username")}
-                  onBlur={handleBlur("Username")}
+                  onChangeText={() => handleChange('Username')}
+                  onBlur={() => handleBlur('Username')}
                   autoCapitalize="none"
                 />
                 <TextField
                   labelTx="labelForm.password"
                   value={values.Password}
-                  onChangeText={handleChange("Password")}
-                  onBlur={handleBlur("Password")}
+                  onChangeText={() => handleChange('Password')}
+                  onBlur={() => handleBlur('Password')}
                   autoCapitalize="none"
                 />
                 <View
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}>
                   <Text
-                    onPress={() => navigate("ForgotPassword")}
+                    onPress={() => navigate('ForgotPassword')}
                     preset="formLabel"
                     tx="loginScreen.foget"
-                    style={{ textAlign: "center", marginBottom: 20 }}
+                    style={{textAlign: 'center', marginBottom: 20}}
                   />
                   <View
                     style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                       // alignItems: "center",
-                    }}
-                  >
+                    }}>
                     <Text
                       preset="formLabel"
                       tx="loginScreen.remmberMe"
-                      style={{ textAlign: "center", marginBottom: 20 }}
+                      style={{textAlign: 'center', marginBottom: 20}}
                     />
                     <Toggle
                       value={isRemmber}
-                      onValueChange={(value) => {
-                        setFieldValue("RememberMe", value)
-                        setRemmber(value)
+                      onValueChange={value => {
+                        setFieldValue('RememberMe', value);
+                        setRemmber(value);
                       }}
                       containerStyle={{
-                        transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
+                        transform: [{scaleX: 0.7}, {scaleY: 0.7}],
                         marginTop: -10,
                       }}
                       variant="switch"
                     />
                   </View>
                 </View>
-                <Button tx="loginScreen.signIn" preset="filled" onPress={() => handleSubmit()} />
+                <Button
+                  tx="loginScreen.signIn"
+                  preset="filled"
+                  onPress={() => handleSubmit()}
+                />
               </>
             }
           />
         </View>
       </AuthScreen>
-    )
-  },
-)
+    );
+  });
 
 const $root: ViewStyle = {
   flex: 1,
   backgroundColor: colors.transparent,
-}
+};
 
 const $container: ViewStyle = {
-  justifyContent: "center",
-  alignItems: "center",
-}
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 const $metadata: ViewStyle = {
   marginTop: spacing.extraSmall,
   width: 100,
   height: 100,
-  flexDirection: "row",
-}
+  flexDirection: 'row',
+};
