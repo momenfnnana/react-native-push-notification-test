@@ -16,7 +16,7 @@ import { Modal } from "./Modal"
 import { useMutation, useQueryClient } from "react-query"
 import { acceptOrder, NewTrip } from "@services"
 import { useNavigation } from "@react-navigation/native"
-// import { HomeScreenNavigationProp } from "navigators/HomeStackNavigator"
+import { HomeScreenNavigationProp } from "@navigators"
 
 export interface NewTripCardProps extends NewTrip {
   /**
@@ -41,8 +41,8 @@ export const NewTripCard = observer(function NewTripCard(props: NewTripCardProps
     orderTravelId,
   } = props
   const { width } = useWindowDimensions()
-  // const { navigate } = useNavigation<HomeScreenNavigationProp>()
-  const { navigate } = useNavigation<any>()
+  const { navigate } = useNavigation<HomeScreenNavigationProp>()
+
   const $styles = [$container, { width: width - 32 }, style]
   const [isConfirmModalOpen, setIsConfirmModalOpen] = React.useState<boolean>(false)
   const queryClient = useQueryClient()

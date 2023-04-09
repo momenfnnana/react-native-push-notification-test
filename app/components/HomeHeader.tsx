@@ -17,7 +17,7 @@ import {useSafeAreaInsetsStyle} from '@utils';
 import {BackIcon, QRIcon} from '@assets';
 import {TxKeyPath} from '@i18n';
 import {useNavigation} from '@react-navigation/native';
-// import { HomeScreenNavigationProp } from "@navigators"
+import { HomeScreenNavigationProp } from "@navigators"
 import {profileImage} from '@assets';
 
 export interface HomeHeaderProps {
@@ -35,8 +35,8 @@ export const HomeHeader = observer(function HomeHeader(props: HomeHeaderProps) {
   const {style, title, balance, hideBackIcon, RightComponent} = props;
   const $containerInsets = useSafeAreaInsetsStyle(['top']);
   const $styles = [$container, $containerInsets, style];
-  // const { navigate, goBack, canGoBack } = useNavigation<HomeScreenNavigationProp>()
-  const {navigate, goBack, canGoBack} = useNavigation<any>();
+  const { navigate, goBack, canGoBack } = useNavigation<HomeScreenNavigationProp>()
+
   return (
     <View style={$styles}>
       <View style={$row}>

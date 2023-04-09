@@ -13,7 +13,7 @@ import { colors, spacing, typography } from "@theme"
 import { Text } from "./Text"
 import { PinIcon, RedPin } from "@assets"
 import { useNavigation } from "@react-navigation/native"
-// import { HomeScreenNavigationProp } from "@navigators"
+import { HomeScreenNavigationProp } from "@navigators"
 
 export interface HomeCardProps {
   style?: StyleProp<ViewStyle>
@@ -45,8 +45,7 @@ export const HomeCard = observer(function HomeCard(props: HomeCardProps) {
   } = props
   const { width } = useWindowDimensions()
   const $styles = [$container, { width: width - 32 }, style]
-  // const { navigate } = useNavigation<HomeScreenNavigationProp>()
-  const { navigate } = useNavigation<any>()
+  const { navigate } = useNavigation<HomeScreenNavigationProp>()
 
   const onPressCardHandler = () => {
     switch (currentStatusCode) {

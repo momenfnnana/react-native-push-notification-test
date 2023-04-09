@@ -14,7 +14,7 @@ import { Text } from "./Text"
 import moment from "moment"
 import { EditIcon, OrderBoxIcon, WhatsappIcon } from "../../assets/icons"
 import { useNavigation } from "@react-navigation/native"
-// import { OrderScreenNavigationProp } from "navigators"
+import { OrderScreenNavigationProp } from "@navigators"
 
 export interface OrderCardProps {
   /**
@@ -35,8 +35,8 @@ export interface OrderCardProps {
  */
 export const OrderCard = observer(function OrderCard(props: OrderCardProps) {
   const { width } = useWindowDimensions()
-  // const { navigate } = useNavigation<OrderScreenNavigationProp>()
-  const { navigate } = useNavigation<any>()
+  const { navigate } = useNavigation<OrderScreenNavigationProp>()
+
   const {
     onPressCard,
     style,
