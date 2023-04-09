@@ -16,7 +16,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-
+import {Button, AuthScreen, AutoImage, Card} from '@components';
 import {
   Colors,
   DebugInstructions,
@@ -87,7 +87,8 @@ function App(): JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <ScrollView
+      <Button text="asd" />
+      {/* <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
@@ -110,7 +111,7 @@ function App(): JSX.Element {
           </Section>
           <LearnMoreLinks />
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 }

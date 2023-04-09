@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.624" height="15.573" viewBox="0 0 13.624 15.573">
+  <g id="Pin" transform="translate(0.505 0.5)">
+    <g id="map-pin">
+      <path id="Vector" d="M4.667,6.417a1.75,1.75,0,1,0-1.75-1.75A1.75,1.75,0,0,0,4.667,6.417Z" transform="translate(1.64 1.518)" fill="#f8f9fb" stroke="#f8f9fb" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <path id="Vector-2" data-name="Vector" d="M10.767,10.767,7.422,14.112a1.577,1.577,0,0,1-2.229,0L1.847,10.767a6.307,6.307,0,1,1,8.92,0Z" transform="translate(0 0)" fill="#f8f9fb" stroke="#1a202c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <ellipse id="Ellipse_59" data-name="Ellipse 59" cx="2.25" cy="2.25" rx="2.25" ry="2.25" transform="translate(4.057 3.934)" fill="#1a202c"/>
+    </g>
+  </g>
+</svg>

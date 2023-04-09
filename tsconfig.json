@@ -1,3 +1,21 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      // "tests": ["tests/*"],
+      "@assets": ["./assets"],
+      // "@screens": ["./app/screens"],
+      "@config": ["./app/config"],
+      "@i18n": ["./app/i18n"],
+      "@models": ["./app/models"],
+      // "@navigators": ["./app/navigators"],
+      "@services": ["./app/services"],
+      "@theme": ["./app/theme"],
+      "@hooks": ["./app/hooks"],
+      "@utils": ["./app/utils"],
+      "@components": ["./app/components"]
+    }
+  }
 }
