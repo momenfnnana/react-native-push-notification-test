@@ -107,21 +107,21 @@ function App(props: AppProps) {
   //     }
   //   });
   // }, [accessToken]);
-  // async function requestUserPermission() {
-  //   if (Platform.OS === "ios") {
-  //     const authStatus = await messaging().requestPermission()
-  //     const enabled =
-  //       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-  //       authStatus === messaging.AuthorizationStatus.PROVISIONAL
+  async function requestUserPermission() {
+    if (Platform.OS === 'ios') {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-  //     if (enabled) {
-  //       console.log("Authorization status:", authStatus)
-  //     }
-  //   }
-  // }
-  // useEffect(() => {
-  //   requestUserPermission()
-  // }, [])
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+    }
+  }
+  useEffect(() => {
+    requestUserPermission();
+  }, []);
 
   // Before we show the app, we have to wait for our state to be ready.
   // In the meantime, don't render anything. This will be the background
