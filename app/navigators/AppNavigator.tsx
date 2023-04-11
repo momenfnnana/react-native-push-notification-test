@@ -172,7 +172,6 @@ const AppStack = observer(function AppStack() {
 
   useEffect(() => {
     readAccessToken().then(accessToken => {
-      console.log({accessToken});
       if (accessToken) {
         setAxiosAccessToken(accessToken);
         setAccessToken(accessToken);

@@ -154,7 +154,7 @@ export const ProfileScreen: FC<
                   }
                 />
                 <SettingTab
-                  label="profileScreen.call-us"
+                  label="profileScreen.contact-us"
                   onPress={() => navigate('ContactUsScreen')}
                 />
                 <SettingTab
