@@ -57,7 +57,7 @@ export const InfoSection = ({ children, data, containerStyle, rightIcon }: IInfo
           value={balance}
           customValue={
             <View style={styles.balanceValueContainer}>
-              <Text text={balance} style={styles.balanceValue} preset="bold" size="xxs" />
+              <Text text={balance+" ₪"} style={styles.balanceValue} preset="bold" size="xxs" />
             </View>
           }
         />

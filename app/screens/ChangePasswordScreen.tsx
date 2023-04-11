@@ -82,6 +82,7 @@ export const ChangePasswordScreen: FC<
           onBlur={handleBlur("OldPassword")}
           status={touched.OldPassword ? "error" : undefined}
           helper={touched.OldPassword && errors.OldPassword}
+          secureTextEntry
         />
         <TextField
           labelTx="labelForm.password"
@@ -90,6 +91,7 @@ export const ChangePasswordScreen: FC<
           onBlur={handleBlur("NewPassword")}
           status={touched.NewPassword ? "error" : undefined}
           helper={touched.NewPassword && errors.NewPassword}
+          secureTextEntry
         />
         <TextField
           labelTx="labelForm.newPasswordInput"
@@ -98,6 +100,7 @@ export const ChangePasswordScreen: FC<
           onBlur={handleBlur("ConfirmPassword")}
           status={touched.ConfirmPassword ? "error" : undefined}
           helper={touched.ConfirmPassword && errors.ConfirmPassword}
+          secureTextEntry
         />
       </InfoSection>
     </ScreenContainer>

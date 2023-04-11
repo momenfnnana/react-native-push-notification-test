@@ -105,15 +105,15 @@ export const HomeCard = observer(function HomeCard(props: HomeCardProps) {
       <View style={$footer}>
         <View>
           <Text style={$titleSection} tx="common.travelCost" />
-          <Text style={$textValueFooter}>{travelCost + " NIS"}</Text>
+          <Text style={$textValueFooter}>{travelCost+ " ₪"}</Text>
         </View>
         <View>
           <Text style={$titleSection} tx="common.paidAmount" />
-          <Text style={$textValueFooter}>{paidAmount + " NIS"}</Text>
+          <Text style={$textValueFooter}>{paidAmount+ " ₪"}</Text>
         </View>
         <View>
           <Text style={$titleSection} tx="common.total" />
-          <Text style={$textValueFooter}>{total + " NIS"}</Text>
+          <Text style={$textValueFooter}>{total+ " ₪"}</Text>
         </View>
       </View>
     </Pressable>

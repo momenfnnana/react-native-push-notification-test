@@ -4,36 +4,39 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import Geolocation from "@react-native-community/geolocation"
+import Geolocation from '@react-native-community/geolocation';
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
   NavigatorScreenParams,
   RouteProp,
-} from "@react-navigation/native"
+} from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
-} from "@react-navigation/native-stack"
-import { StackScreenProps } from "@react-navigation/stack"
-import { observer } from "mobx-react-lite"
-import React, { useEffect } from "react"
-import { useColorScheme } from "react-native"
-import { QueryClient, QueryClientProvider, useQuery } from "react-query"
-import { getProfile } from "@services"
-import { remove, setAxiosAccessToken } from "@utils"
-import Config from "../config"
-import { useStores } from "../models"
+} from '@react-navigation/native-stack';
+import {StackScreenProps} from '@react-navigation/stack';
+import {observer} from 'mobx-react-lite';
+import React, {useCallback, useEffect} from 'react';
+import {Alert, Linking, Platform, useColorScheme} from 'react-native';
+import {QueryClient, QueryClientProvider, useQuery} from 'react-query';
+import {getProfile} from '@services';
+import {readAccessToken, remove, setAxiosAccessToken} from '@utils';
+import Config from '../config';
+import {useStores} from '../models';
 import {
   ForgotPasswordScreen,
   VerficationScreen,
   LoginScreen,
   ResetPasswordScreen,
-} from "../screens"
+} from '../screens';
 
-import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
-import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import {DemoNavigator, DemoTabParamList} from './DemoNavigator';
+import {navigationRef, useBackButtonHandler} from './navigationUtilities';
+import {HomeStackNavigator} from './HomeStackNavigator';
+import {PERMISSIONS, request} from 'react-native-permissions';
+import {translate} from '@i18n';
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -49,104 +52,197 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppStackParamList = {
-  Welcome: undefined
-  Home: undefined
-  Login: undefined
-  ForgotPassword: undefined
-  Verfication: { Mobile: string; EncCode: string }
-  ResetPassword: { Mobile: string; EncCode: string; Code: string }
-  Demo: NavigatorScreenParams<DemoTabParamList>
-}
+  Welcome: undefined;
+  Home: undefined;
+  Login: undefined;
+  ForgotPassword: undefined;
+  Verfication: {Mobile: string; EncCode: string};
+  ResetPassword: {Mobile: string; EncCode: string; Code: string};
+  Demo: NavigatorScreenParams<DemoTabParamList>;
+};
 
-export type VerficationScreenRouteProp = RouteProp<AppStackParamList, "Verfication">
-export type ResetPasswordScreenRouteProp = RouteProp<AppStackParamList, "ResetPassword">
+export type VerficationScreenRouteProp = RouteProp<
+  AppStackParamList,
+  'Verfication'
+>;
+export type ResetPasswordScreenRouteProp = RouteProp<
+  AppStackParamList,
+  'ResetPassword'
+>;
 
-export type LoginNavigationProp = NativeStackNavigationProp<AppStackParamList, "Login">
+export type LoginNavigationProp = NativeStackNavigationProp<
+  AppStackParamList,
+  'Login'
+>;
 export type ForgotPasswordNavigationProp = NativeStackNavigationProp<
   AppStackParamList,
-  "ForgotPassword"
->
-export type VerficationNavigationProp = NativeStackNavigationProp<AppStackParamList, "Verfication">
+  'ForgotPassword'
+>;
+export type VerficationNavigationProp = NativeStackNavigationProp<
+  AppStackParamList,
+  'Verfication'
+>;
 export type ResetPasswordNavigationProp = NativeStackNavigationProp<
   AppStackParamList,
-  "ResetPassword"
->
+  'ResetPassword'
+>;
 /**
  * This is a list of all the route names that will exit the app if the back button
  * is pressed while in that screen. Only affects Android.
  */
-const exitRoutes = Config.exitRoutes
+const exitRoutes = Config.exitRoutes;
 
-export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreenProps<
-  AppStackParamList,
-  T
->
+export type AppStackScreenProps<T extends keyof AppStackParamList> =
+  StackScreenProps<AppStackParamList, T>;
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>()
+const Stack = createNativeStackNavigator<AppStackParamList>();
 
 const AppStack = observer(function AppStack() {
   // @demo remove-block-start
   const {
-    authenticationStore: { isAuthenticated, setAccessToken },
-  } = useStores()
-  const queryClient = new QueryClient()
-  const { isLoading, data, status } = useQuery("getProfile", getProfile, { retry: 0 })
+    authenticationStore: {
+      isAuthenticated,
+      setAccessToken,
+      accessToken,
+      setLocationPermission,
+    },
+  } = useStores();
+  const queryClient = new QueryClient();
+  const {isLoading, data, status, error, refetch} = useQuery(
+    'getProfile',
+    getProfile,
+    {
+      retry: 0,
+      enabled: false,
+    },
+  );
+
+  const requestLocation = useCallback(async () => {
+    Platform.OS === 'android'
+      ? request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
+          console.log({result});
+          setLocationPermission(result === 'granted');
+          if (result !== 'granted') {
+            console.log('first');
+            Alert.alert(
+              'Location disabled',
+              translate('common.openLocation'),
+              [
+                {
+                  text: translate('common.setting'),
+                  onPress: () => {
+                    Linking.openSettings();
+                  },
+                },
+                {
+                  text: translate('common.cancel'),
+                  onPress: () => {},
+                  style: 'destructive',
+                },
+              ],
+              {cancelable: false},
+            );
+          }
+        })
+      : request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(async result => {
+          setLocationPermission(result !== 'blocked');
+          if (result === 'blocked') {
+            Alert.alert(
+              'Location disabled',
+              translate('common.openLocation'),
+              [
+                {
+                  text: translate('common.setting'),
+                  onPress: () => {
+                    Linking.openURL('app-settings:');
+                  },
+                },
+                {
+                  text: translate('common.cancel'),
+                  onPress: () => {},
+                  style: 'destructive',
+                },
+              ],
+              {cancelable: false},
+            );
+          }
+        });
+  }, []);
 
   useEffect(() => {
-    if (status === "error") {
-      setAccessToken("")
-      setAxiosAccessToken("")
-      remove("accessToken")
+    readAccessToken().then(accessToken => {
+      console.log({accessToken});
+      if (accessToken) {
+        setAxiosAccessToken(accessToken);
+        setAccessToken(accessToken);
+        refetch();
+      }
+    });
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (status === 'error') {
+      setAccessToken('');
+      setAxiosAccessToken('');
+      remove('accessToken');
     }
-  }, [status])
+  }, [status]);
 
   useEffect(() => {
     Geolocation.setRNConfiguration({
       skipPermissionRequests: false,
-      authorizationLevel: "auto",
-      locationProvider: "auto",
-    })
-  }, [])
+      authorizationLevel: 'auto',
+      locationProvider: 'auto',
+    });
+    requestLocation();
+  }, []);
 
   // @demo remove-block-end
   return (
     <QueryClientProvider client={queryClient}>
       <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName={isAuthenticated ? "Demo" : "Login"}
-      >
+        screenOptions={{headerShown: false}}
+        initialRouteName={isAuthenticated ? 'Demo' : 'Login'}>
         {isAuthenticated ? (
           <Stack.Screen name="Demo" component={DemoNavigator} />
         ) : (
           <>
             <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+            <Stack.Screen
+              name="ForgotPassword"
+              component={ForgotPasswordScreen}
+            />
             <Stack.Screen name="Verfication" component={VerficationScreen} />
-            <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+            <Stack.Screen
+              name="ResetPassword"
+              component={ResetPasswordScreen}
+            />
           </>
         )}
         {/* @demo remove-block-end */}
         {/** 🔥 Your screens go here */}
       </Stack.Navigator>
     </QueryClientProvider>
-  )
-})
+  );
+});
 
-interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+interface NavigationProps
+  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const colorScheme = useColorScheme()
+export const AppNavigator = observer(function AppNavigator(
+  props: NavigationProps,
+) {
+  const colorScheme = useColorScheme();
 
-  useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
+  useBackButtonHandler(routeName => exitRoutes.includes(routeName));
 
   return (
     <NavigationContainer
       ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}
-    >
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      {...props}>
       <AppStack />
     </NavigationContainer>
-  )
-})
+  );
+});

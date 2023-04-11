@@ -5,6 +5,13 @@ module.exports = (async () => {
     resolver: {sourceExts, assetExts},
   } = await getDefaultConfig();
   return {
+    dependencies: {
+      'react-native-vector-icons': {
+        platforms: {
+          ios: null,
+        },
+      },
+    },
     transformer: {
       babelTransformerPath: require.resolve('react-native-svg-transformer'),
     },

@@ -87,7 +87,7 @@ export const DriverReachCustomerScreen: FC<DriverReachCustomerScreenRouteProp> =
             )}
             <View style={$itemRow}>
               <Text style={$titleItem} tx="orderDetailsScreen.travelCost" />
-              <Text style={$valueItem} text={`${orderData?.travelCost} NIS`} />
+              <Text style={[$valueItem, { color: colors.primary }]} text={`${orderData?.travelCost} ₪`} />
             </View>
             <Divider style={{ marginVertical: spacing.small }} />
             <View style={$itemRow}>

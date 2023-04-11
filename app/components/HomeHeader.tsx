@@ -55,7 +55,7 @@ export const HomeHeader = observer(function HomeHeader(props: HomeHeaderProps) {
         RightComponent
       ) : (
         <View style={[$accountContainer, {opacity: balance ? 1 : 0}]}>
-          <Text style={$accountText} text={balance + ' NIS'} />
+          <Text style={$accountText} text={balance + " ₪"} />
         </View>
       )}
     </View>

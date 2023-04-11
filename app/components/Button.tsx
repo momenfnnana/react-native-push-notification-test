@@ -146,6 +146,7 @@ const $baseTextStyle: TextStyle = {
   // lineHeight: 20,
   fontFamily: typography.primary.medium,
   textAlign: "center",
+  textTransform: "capitalize",
   flexShrink: 1,
   flexGrow: 0,
   zIndex: 2,
