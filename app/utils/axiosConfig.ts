@@ -1,10 +1,10 @@
 import axios from 'axios';
-// import { showErrorMessage } from "@models"
+import { showErrorMessage } from "@models"
 import Snackbar from 'react-native-snackbar';
 import {colors} from '@theme';
 import config from '@config';
 import {saveString, remove} from './storage';
-// import { navigate } from "navigators/ExternalNavigation"
+import { navigate } from "@navigators"
 import {translate} from '../i18n/translate';
 
 axios.defaults.auth = {
@@ -41,15 +41,15 @@ axios.interceptors.response.use(
       setAxiosAccessToken('');
       remove('accessToken');
       if (!!error?.response?.data?.message.length) {
-        // showErrorMessage(error?.response?.data?.message)
+        showErrorMessage(error?.response?.data?.message)
       } else {
-        // showErrorMessage(translate("errorMessages.unAuth"))
+        showErrorMessage(translate("errorMessages.unAuth"))
       }
     } else {
       if (!!error?.response?.data?.message.length) {
-        // showErrorMessage(error?.response?.data?.message)
+        showErrorMessage(error?.response?.data?.message)
       } else {
-        // showErrorMessage(translate("errorMessages.defult"))
+        showErrorMessage(translate("errorMessages.defult"))
       }
     }
     throw error;
