@@ -121,10 +121,15 @@ const AppStack = observer(function AppStack() {
   const requestLocation = useCallback(async () => {
     Platform.OS === 'android'
       ? request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
-          console.log({result});
-          setLocationPermission(result === 'granted');
+          if (result === 'granted') {
+            setLocationPermission(true);
+            Geolocation.setRNConfiguration({
+              skipPermissionRequests: false,
+              authorizationLevel: 'auto',
+              locationProvider: 'auto',
+            });
+          }
           if (result !== 'granted') {
-            console.log('first');
             Alert.alert(
               'Location disabled',
               translate('common.openLocation'),
@@ -166,6 +171,12 @@ const AppStack = observer(function AppStack() {
               ],
               {cancelable: false},
             );
+          } else {
+            Geolocation.setRNConfiguration({
+              skipPermissionRequests: false,
+              authorizationLevel: 'auto',
+              locationProvider: 'auto',
+            });
           }
         });
   }, []);
@@ -190,11 +201,6 @@ const AppStack = observer(function AppStack() {
   }, [status]);
 
   useEffect(() => {
-    Geolocation.setRNConfiguration({
-      skipPermissionRequests: false,
-      authorizationLevel: 'auto',
-      locationProvider: 'auto',
-    });
     requestLocation();
   }, []);
 

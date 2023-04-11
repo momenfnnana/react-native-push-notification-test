@@ -37,7 +37,7 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {useAccessToken} from '@hooks';
 import {setAxiosAccessToken} from '@utils';
-// import messaging from "@react-native-firebase/messaging"
+import messaging from '@react-native-firebase/messaging';
 import {translate} from '@i18n';
 
 // STOP! READ ME FIRST!
@@ -104,13 +104,14 @@ export const LoginScreen: FC<StackScreenProps<AppStackScreenProps, 'Login'>> =
       validationSchema,
     });
 
-    // useEffect(() => {
-    //   messaging()
-    //     .getToken()
-    //     .then((token) => {
-    //       setFieldValue("NotificationToken", token)
-    //     })
-    // }, [])
+    useEffect(() => {
+      messaging()
+        .getToken()
+        .then(token => {
+          console.log({token});
+          setFieldValue('NotificationToken', token);
+        });
+    }, []);
 
     if (isLoading) {
       return <Loader isPageLoading />;
