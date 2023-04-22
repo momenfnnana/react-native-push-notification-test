@@ -108,7 +108,13 @@ export const EndTripScreen: FC<EndTripScreenRouteProp> = observer(
                 style={$titleItem}
                 tx="orderDetailsScreen.customerMobileNumber"
               />
-              <Text style={$valueItem} text={orderData?.customerMobileNumber} />
+              <Text
+                onPress={() =>
+                  Linking.openURL(`tel:${orderData?.customerMobileNumber}`)
+                }
+                style={$valueItem}
+                text={orderData?.customerMobileNumber}
+              />
             </View>
             <Divider style={{marginVertical: spacing.small}} />
             {orderData?.customerMapLocation && (

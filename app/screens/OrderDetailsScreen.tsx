@@ -94,6 +94,9 @@ export const OrderDetailsScreen: FC<
               tx="orderDetailsScreen.customerMobileNumber"
             />
             <Text
+              onPress={() =>
+                Linking.openURL(`tel:${orderData?.data?.customerMobileNumber}`)
+              }
               style={$valueItem}
               text={orderData?.data?.customerMobileNumber}
             />
