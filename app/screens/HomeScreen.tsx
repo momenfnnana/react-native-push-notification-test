@@ -4,12 +4,9 @@ import {Pressable, TextStyle, View, ViewStyle} from 'react-native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {colors, spacing, typography} from '@theme';
 import {
-  OrderCard,
-  StatisticsCard,
   ContentContainer,
   HomeHeader,
   Screen,
-  HeadingSection,
   Text,
   SearchInput,
   Devider,
@@ -17,16 +14,19 @@ import {
   NewTripCard,
   Loader,
   EmptyPage,
+  OrderCardContent,
+  Modal,
 } from '@components';
 import {
   HomeScreenNavigationProp,
   HomeStackNavigatorParamList,
 } from '@navigators';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useQuery} from 'react-query';
 import {getDashboard, getNewTrips} from '@services';
 import {useDebouncedCallback} from 'use-debounce';
 import {useStores} from '@models';
+import {useOrderModal} from '@hooks';
 
 export const HomeScreen: FC<
   StackScreenProps<HomeStackNavigatorParamList, 'Home'>
@@ -36,7 +36,16 @@ export const HomeScreen: FC<
   const [searchText, setSearchText] = useState<string>('');
   const {
     authenticationStore: {accessToken},
+    userStoreModel: {orderId},
   } = useStores();
+
+  const {
+    showOrderModal,
+    hideOrderModal,
+    isShown: isOrderShown,
+    isLoading: isLoadingOrder,
+    data: orderData,
+  } = useOrderModal(orderId);
 
   const buttonStyle = [$button, $buttonActive];
   const {
@@ -59,6 +68,10 @@ export const HomeScreen: FC<
   }, 1000);
 
   useEffect(() => {
+    if (orderId) showOrderModal();
+  }, [orderId]);
+
+  useEffect(() => {
     debounced();
   }, [searchText]);
 
@@ -69,14 +82,6 @@ export const HomeScreen: FC<
       refetchNewTrips();
     }
   }, [activeButton]);
-
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     refetchNewTrips();
-  //     refetchDashboard();
-  //     return () => {};
-  //   }, []),
-  // );
 
   return (
     <Screen style={$root} preset="scroll">
@@ -149,6 +154,22 @@ export const HomeScreen: FC<
           </>
         )}
       </ContentContainer>
+      <Modal isVisible={isOrderShown} onBackdropPress={hideOrderModal}>
+        <OrderCardContent
+          {...{
+            customerAddress: orderData?.data.customerAddress,
+            onConfirmOrder: () => {},
+            openConfirmModal: () => {},
+            paymentTypeName: orderData?.data?.paymentType,
+            preset: 'popup',
+            restaurantAddress: orderData?.data.restaurantAddress,
+            restaurantName: orderData?.data.restaurantName,
+            closeConfirmModal: hideOrderModal,
+            id: orderId,
+            isLoadingOrder,
+          }}
+        />
+      </Modal>
     </Screen>
   );
 });

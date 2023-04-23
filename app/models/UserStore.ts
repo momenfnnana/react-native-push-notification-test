@@ -16,6 +16,7 @@ export const UserStoreModel = types
     modalHeading: types.optional(types.string || types.null, ""),
     modalBody: types.optional(types.string || types.null, ""),
     success: types.optional(types.boolean || types.null, false),
+    orderId: types.optional(types.string || types.number || types.null, ''),
   })
   .actions((self) => ({
     setUserData(data: UserInfo) {
@@ -25,7 +26,10 @@ export const UserStoreModel = types
         }
       })
     },
-  }))
+    setNotificationOrderId(id: string) {
+      self.orderId = id;
+    },
+  }));
 
 export interface UserStore extends Instance<typeof UserStoreModel> {}
 export interface UserStoreSnapshot extends SnapshotOut<typeof UserStoreModel> {}

@@ -31,13 +31,14 @@ import {
   LoginScreen,
   ResetPasswordScreen,
 } from '../screens';
-
+import Snackbar from 'react-native-snackbar';
 import {DemoNavigator, DemoTabParamList} from './DemoNavigator';
 import {navigationRef, useBackButtonHandler} from './navigationUtilities';
 import {HomeStackNavigator} from './HomeStackNavigator';
 import {PERMISSIONS, request} from 'react-native-permissions';
 import {translate} from '@i18n';
-
+import messaging from '@react-native-firebase/messaging';
+import {colors} from '@theme';
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -107,6 +108,7 @@ const AppStack = observer(function AppStack() {
       accessToken,
       setLocationPermission,
     },
+    userStoreModel: {setNotificationOrderId},
   } = useStores();
   const queryClient = new QueryClient();
   const {isLoading, data, status, error, refetch} = useQuery(
@@ -201,6 +203,37 @@ const AppStack = observer(function AppStack() {
 
   useEffect(() => {
     requestLocation();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log({remoteMessage});
+      
+      setNotificationOrderId(remoteMessage?.data?.OrderTravelId || '');
+      Snackbar.show({
+        text: remoteMessage?.notification?.title || '',
+        duration: Snackbar.LENGTH_SHORT,
+        backgroundColor: colors.palette.greenPalette.green,
+      });
+    });
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+      console.log({remoteMessage});
+      setNotificationOrderId(remoteMessage?.data?.OrderTravelId || '');
+    });
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log({remoteMessage});
+      setNotificationOrderId(remoteMessage?.data?.OrderTravelId || '');
+      // navigateToDirectory(remoteMessage);
+    });
+    messaging()
+      .getInitialNotification()
+      .then(initialMessage => {
+        if (initialMessage) {
+          console.log({initialMessage});
+          setNotificationOrderId(initialMessage?.data?.OrderTravelId || '');
+        }
+      });
+    return unsubscribe;
   }, []);
 
   // @demo remove-block-end
