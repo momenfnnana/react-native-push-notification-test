@@ -258,8 +258,6 @@ const AppStack = observer(function AppStack() {
             />
           </>
         )}
-        {/* @demo remove-block-end */}
-        {/** 🔥 Your screens go here */}
       </Stack.Navigator>
     </QueryClientProvider>
   );

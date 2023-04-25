@@ -67,6 +67,8 @@ export const HomeScreen: FC<
     refetchDashboard();
   }, 1000);
 
+  console.log({orderId});
+
   useEffect(() => {
     if (orderId) showOrderModal();
   }, [orderId]);
@@ -92,7 +94,7 @@ export const HomeScreen: FC<
       />
       <View style={$buttonContainer}>
         <Pressable
-          onPress={() => setActiveButton('delivered')}
+          onPress={() => setActiveButton('dashboard')}
           style={[$button, activeButton !== 'new' && $buttonActive]}>
           <Text
             tx="homeScreen.delivered"

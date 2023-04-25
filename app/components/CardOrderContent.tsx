@@ -7,6 +7,7 @@ import {useMutation, useQueryClient} from 'react-query';
 import {acceptOrder} from '@services';
 import {useNavigation} from '@react-navigation/native';
 import {HomeScreenNavigationProp} from '@navigators';
+import {useStores} from '@models';
 
 type IContent = {
   preset?: 'normal' | 'popup';
@@ -98,13 +99,18 @@ export const OrderCardContent = ({
 
   const $styles = [$container, {width: width - 32}, style];
   const queryClient = useQueryClient();
+  console.log({id});
+  const {
+    userStoreModel: {setNotificationOrderId},
+  } = useStores();
   const {mutate: mutateAcceptOrder} = useMutation(acceptOrder, {
     onSuccess: (data, {IsAccepted}) => {
       closeConfirmModal?.();
+      setNotificationOrderId('');
       if (data.data.isAccepted) {
         // @ts-ignore
         navigate('DriverReachRestaurant', {
-          id,
+          orderTravelId: id,
         });
       } else {
         queryClient.invalidateQueries('getNewTrips');
@@ -112,6 +118,7 @@ export const OrderCardContent = ({
     },
     onError: () => {
       closeConfirmModal?.();
+      setNotificationOrderId('');
     },
   });
   const onConfirmOrder = (IsAccepted: boolean) => {
