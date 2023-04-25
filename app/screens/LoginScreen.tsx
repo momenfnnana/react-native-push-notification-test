@@ -71,8 +71,8 @@ export const LoginScreen: FC<StackScreenProps<AppStackScreenProps, 'Login'>> =
       },
     });
     const initialValues: LoginBody = {
-      Username: 'salam-cs@hotmail.com',
-      Password: 'Salam@123',
+      Username: '',
+      Password: '',
       RememberMe: false,
       NotificationToken: '',
     };

@@ -4,7 +4,7 @@ import {I18nManager} from 'react-native';
 // if English isn't your default language, move Translations to the appropriate language file.
 import en, {Translations} from './en';
 import ar from './ar';
-import {loadString} from '@utils';
+import {loadString, setAxiosLanguage} from '@utils';
 import RNRestart from 'react-native-restart';
 
 i18n.fallbacks = true;
@@ -23,6 +23,15 @@ export const isRTL = i18n.locale === arLanguageKey;
 loadString('language').then(async language => {
   console.log({language});
   i18n.locale = language || enLanguageKey;
+  const langId =
+    language === null
+      ? 8
+      : language === enLanguageKey
+      ? 8
+      : language === arLanguageKey
+      ? 7
+      : 8;
+  setAxiosLanguage(langId.toString());
   let isRTL = i18n.locale === arLanguageKey;
   await I18nManager.allowRTL(isRTL);
   await I18nManager.forceRTL(isRTL);

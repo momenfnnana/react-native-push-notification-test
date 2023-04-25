@@ -15,6 +15,7 @@ export const useOrderModal = (orderId: string | number) => {
     isLoading,
     data,
   } = useQuery('getOrderDetails', () => getOrderDetails(orderId), {
+    enabled: false,
     onSuccess: data => {
       showOrderModal();
       return data;

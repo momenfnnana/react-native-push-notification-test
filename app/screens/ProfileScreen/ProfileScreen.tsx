@@ -94,6 +94,7 @@ export const ProfileScreen: FC<
     setTimeout(() => {
       const languageKey = type === 7 ? arLanguageKey : enLanguageKey;
       saveString('language', languageKey);
+      saveString('languageId', type.toString());
       i18n.locale = languageKey;
       changeDirection();
     }, 300);
