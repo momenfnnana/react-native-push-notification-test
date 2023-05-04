@@ -54,6 +54,8 @@ const ar: Translations = {
     total: 'الاجمالي المطلوب',
     travelDistance: '{{travelDistance}}كم',
     incomplete: 'غير مكتمل',
+    updateLocationMsg:
+      ' تم تحديث الموقع الحالي. \n longitude: {{longitude}}, latitude: {{latitude}}',
   },
   welcomeScreen: {
     postscript:

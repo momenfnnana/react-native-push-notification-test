@@ -86,7 +86,10 @@ function App(props: AppProps) {
 
   async function requestUserPermission() {
     if (Platform.OS === 'ios') {
-      const authStatus = await messaging().requestPermission();
+      const authStatus = await messaging().requestPermission({
+        sound: true,
+        alert: true,
+      });
       const enabled =
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;

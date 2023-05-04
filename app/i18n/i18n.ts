@@ -22,21 +22,17 @@ export const isRTL = i18n.locale === arLanguageKey;
 
 loadString('language').then(async language => {
   console.log({language});
-  i18n.locale = language || enLanguageKey;
-  const langId =
-    language === null
-      ? 8
-      : language === enLanguageKey
-      ? 8
-      : language === arLanguageKey
-      ? 7
-      : 8;
+  i18n.locale = language || arLanguageKey;
+  const langId = language === null ? 7 : language === enLanguageKey ? 8 : 7;
   setAxiosLanguage(langId.toString());
   let isRTL = i18n.locale === arLanguageKey;
   await I18nManager.allowRTL(isRTL);
   await I18nManager.forceRTL(isRTL);
   if (isRTL && !I18nManager.isRTL) {
-    RNRestart.restart();
+    await RNRestart.restart();
+  }
+  if (!isRTL && I18nManager.isRTL) {
+    await RNRestart.restart();
   }
 });
 

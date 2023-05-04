@@ -73,7 +73,12 @@ export const ProfileScreen: FC<
     const isRTL = i18n.locale === arLanguageKey;
     await I18nManager.allowRTL(isRTL);
     await I18nManager.forceRTL(isRTL);
-    RNRestart.restart();
+    if (isRTL && !I18nManager.isRTL) {
+      await RNRestart.restart();
+    }
+    if (!isRTL && I18nManager.isRTL) {
+      await RNRestart.restart();
+    }
   };
 
   type ILanguageType = number;

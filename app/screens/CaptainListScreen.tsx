@@ -24,6 +24,7 @@ import {colors, spacing, typography} from '@theme';
 import {useNavigation} from '@react-navigation/native';
 import {useQuery} from 'react-query';
 import {getTopCaptains} from '@services';
+import {DriverVector} from '@assets';
 
 export const CaptainList: FC<
   StackScreenProps<DemoTabParamList, 'CaptainList'>
@@ -44,10 +45,15 @@ export const CaptainList: FC<
             <View key={index.toString()} style={$containItem}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image
-                  style={$image}
-                  source={{
-                    uri: 'http://captain.salam-it.com' + item.profilePhoto,
-                  }}
+                  style={[$image, {resizeMode: 'contain'}]}
+                  source={
+                    !!item.profilePhoto
+                      ? {
+                          uri:
+                            'http://captain.salam-it.com' + item.profilePhoto,
+                        }
+                      : DriverVector
+                  }
                 />
                 <View>
                   <Text text={item.fullName} style={$driverName} />
@@ -125,5 +131,5 @@ const $idText: TextStyle = {
   fontFamily: typography.primary.bold,
   fontSize: 23,
   color: colors.error,
-  padding:5
+  padding: 5,
 };

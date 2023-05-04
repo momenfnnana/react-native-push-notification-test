@@ -24,7 +24,6 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import messaging from '@react-native-firebase/messaging';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,24 +61,6 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      messaging()
-        .getToken()
-        .then(token => {
-          console.log({token});
-        });
-      console.log('Authorization status:', authStatus);
-    }
-  }
-  useEffect(() => {
-    requestUserPermission();
-  }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>

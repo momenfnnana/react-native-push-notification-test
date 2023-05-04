@@ -53,6 +53,8 @@ const en = {
     total: 'Total Cost',
     travelDistance: '{{travelDistance}}km',
     incomplete: 'incomplete',
+    updateLocationMsg:
+      'The current Location has been updated. \n longitude: {{longitude}}, latitude: {{latitude}} ',
   },
   welcomeScreen: {
     postscript:

@@ -19,7 +19,13 @@ import {
 import {StackScreenProps} from '@react-navigation/stack';
 import {observer} from 'mobx-react-lite';
 import React, {useCallback, useEffect} from 'react';
-import {Alert, Linking, Platform, useColorScheme} from 'react-native';
+import {
+  Alert,
+  Linking,
+  PermissionsAndroid,
+  Platform,
+  useColorScheme,
+} from 'react-native';
 import {QueryClient, QueryClientProvider, useQuery} from 'react-query';
 import {getProfile} from '@services';
 import {readAccessToken, remove, setAxiosAccessToken} from '@utils';
@@ -122,36 +128,41 @@ const AppStack = observer(function AppStack() {
 
   const requestLocation = useCallback(async () => {
     Platform.OS === 'android'
-      ? request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
-          if (result === 'granted') {
-            setLocationPermission(true);
-            Geolocation.setRNConfiguration({
-              skipPermissionRequests: false,
-              authorizationLevel: 'auto',
-              locationProvider: 'auto',
-            });
-          }
-          if (result !== 'granted') {
-            Alert.alert(
-              'Location disabled',
-              translate('common.openLocation'),
-              [
-                {
-                  text: translate('common.setting'),
-                  onPress: () => {
-                    Linking.openSettings();
+      ? request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+          .then(result => {
+            if (result === 'granted') {
+              setLocationPermission(true);
+              Geolocation.setRNConfiguration({
+                skipPermissionRequests: false,
+                authorizationLevel: 'always',
+              });
+            }
+            if (result !== 'granted') {
+              Alert.alert(
+                'Location disabled',
+                translate('common.openLocation'),
+                [
+                  {
+                    text: translate('common.setting'),
+                    onPress: () => {
+                      Linking.openSettings();
+                    },
                   },
-                },
-                {
-                  text: translate('common.cancel'),
-                  onPress: () => {},
-                  style: 'destructive',
-                },
-              ],
-              {cancelable: false},
-            );
-          }
-        })
+                  {
+                    text: translate('common.cancel'),
+                    onPress: () => {},
+                    style: 'destructive',
+                  },
+                ],
+                {cancelable: false},
+              );
+            }
+          })
+          .then(i =>
+            PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+            ),
+          )
       : request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(async result => {
           setLocationPermission(result !== 'blocked');
           if (result === 'blocked') {
@@ -176,8 +187,7 @@ const AppStack = observer(function AppStack() {
           } else {
             Geolocation.setRNConfiguration({
               skipPermissionRequests: false,
-              authorizationLevel: 'auto',
-              locationProvider: 'auto',
+              authorizationLevel: 'always',
             });
           }
         });
@@ -208,7 +218,7 @@ const AppStack = observer(function AppStack() {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log({remoteMessage});
-      
+
       setNotificationOrderId(remoteMessage?.data?.OrderTravelId || '');
       Snackbar.show({
         text: remoteMessage?.notification?.title || '',

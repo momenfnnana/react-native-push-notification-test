@@ -54,7 +54,6 @@ export const HomeScreen: FC<
     refetch: refetchDashboard,
   } = useQuery('getDashboard', () => getDashboard(searchText), {
     onSuccess: data => {
-      console.log({data: data.data.dashboardCaptain});
       return data;
     },
   });
