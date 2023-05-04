@@ -159,8 +159,6 @@ export const HomeScreen: FC<
         <OrderCardContent
           {...{
             customerAddress: orderData?.data.customerAddress,
-            onConfirmOrder: () => {},
-            openConfirmModal: () => {},
             paymentTypeName: orderData?.data?.paymentType,
             preset: 'popup',
             restaurantAddress: orderData?.data.restaurantAddress,
@@ -168,6 +166,7 @@ export const HomeScreen: FC<
             closeConfirmModal: hideOrderModal,
             id: orderId,
             isLoadingOrder,
+            canRejectOrder: false,
           }}
         />
       </Modal>

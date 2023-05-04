@@ -20,6 +20,7 @@ type IContent = {
   closeConfirmModal?: () => void;
   id?: string | number;
   isLoadingOrder?: boolean;
+  canRejectOrder?: boolean;
 };
 
 export const OrderCardContent = ({
@@ -33,6 +34,7 @@ export const OrderCardContent = ({
   closeConfirmModal,
   id,
   isLoadingOrder,
+  canRejectOrder = true,
 }: IContent) => {
   const {navigate} = useNavigation<HomeScreenNavigationProp>();
   const {width} = useWindowDimensions();
@@ -168,21 +170,23 @@ export const OrderCardContent = ({
             style={{
               backgroundColor: colors.accepted,
               marginTop: spacing.medium,
-              flex: 0.48,
+              flex: canRejectOrder ? 0.48 : 1,
             }}
             tx="homeScreen.newTripCard.acceptBtn"
             onPress={() => onConfirmOrder(true)}
           />
-          <Button
-            preset="filled"
-            style={{
-              backgroundColor: colors.palette.reject,
-              marginTop: spacing.medium,
-              flex: 0.48,
-            }}
-            tx="homeScreen.newTripCard.rejectBtn"
-            onPress={() => onConfirmOrder(false)}
-          />
+          {canRejectOrder && (
+            <Button
+              preset="filled"
+              style={{
+                backgroundColor: colors.palette.reject,
+                marginTop: spacing.medium,
+                flex: 0.48,
+              }}
+              tx="homeScreen.newTripCard.rejectBtn"
+              onPress={() => onConfirmOrder(false)}
+            />
+          )}
         </View>
       )}
     </View>
