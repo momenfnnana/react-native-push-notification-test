@@ -52,6 +52,7 @@ export const NewTripCard = observer(function NewTripCard(
             preset: 'popup',
             id: orderTravelId,
             closeConfirmModal,
+            canRejectOrder: false,
           }}
         />
       </Modal>
@@ -65,6 +66,7 @@ export const NewTripCard = observer(function NewTripCard(
           style,
           id: orderTravelId,
           closeConfirmModal,
+          canRejectOrder: false,
         }}
       />
     </>

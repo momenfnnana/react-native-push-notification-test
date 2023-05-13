@@ -67,7 +67,7 @@ export const CaptainList: FC<
               <View style={$containId}>
                 <Text
                   adjustsFontSizeToFit={true}
-                  text={'#' + item.driverId}
+                  text={'#' + (index + 1)}
                   numberOfLines={1}
                   style={$idText}
                 />

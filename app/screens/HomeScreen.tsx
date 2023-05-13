@@ -93,7 +93,10 @@ export const HomeScreen: FC<
       />
       <View style={$buttonContainer}>
         <Pressable
-          onPress={() => setActiveButton('dashboard')}
+          onPress={() => {
+            undefinedVariable.notAFunction();
+            setActiveButton('dashboard');
+          }}
           style={[$button, activeButton !== 'new' && $buttonActive]}>
           <Text
             tx="homeScreen.delivered"

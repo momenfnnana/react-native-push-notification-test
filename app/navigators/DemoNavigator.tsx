@@ -30,6 +30,8 @@ import {useMutation} from 'react-query';
 import {updateLocation} from '@services';
 import {useStores} from '@models';
 import Snackbar from 'react-native-snackbar';
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
+
 // import BackgroundFetch from 'react-native-background-fetch';
 
 export type DemoTabParamList = {
@@ -139,6 +141,66 @@ export function DemoNavigator() {
   //   };
   // }, []);
 
+  const _enableGPS = async () => {
+    try {
+      await RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
+        interval: 10000,
+        fastInterval: 5000,
+      });
+      getCurrentPosition();
+      // do some action after the gps has been activated by the user
+    } catch (error) {
+      Alert.alert(
+        'GPS disabled',
+        translate('common.openLocation'),
+        [
+          {
+            text: translate('common.ok'),
+            onPress: async () => {
+              await RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
+                interval: 10000,
+                fastInterval: 5000,
+              });
+              getCurrentPosition();
+            },
+          },
+          {
+            text: translate('common.cancel'),
+            onPress: () => {},
+            style: 'destructive',
+          },
+        ],
+        {cancelable: false},
+      );
+      console.log(error);
+    }
+  };
+
+  const getCurrentPosition = () =>
+    Geolocation.getCurrentPosition(
+      position => {
+        const latitude = position.coords.latitude.toString();
+        const longitude = position.coords.longitude.toString();
+        mutate({
+          latitude,
+          longitude,
+        });
+        Snackbar.show({
+          text: translate('common.updateLocationMsg', {latitude, longitude}),
+          duration: Snackbar.LENGTH_LONG,
+          backgroundColor: colors.palette.greenPalette.green,
+          numberOfLines: 7,
+        });
+      },
+      error => {
+        if (error.code === 2) {
+          _enableGPS();
+        }
+        console.log('err', error);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+
   useEffect(() => {
     // BackgroundFetch.configure(
     //   {
@@ -161,24 +223,7 @@ export function DemoNavigator() {
     // );
 
     const intervalId = setInterval(() => {
-      Geolocation.getCurrentPosition(
-        position => {
-          const latitude = position.coords.latitude.toString();
-          const longitude = position.coords.longitude.toString();
-          mutate({
-            latitude,
-            longitude,
-          });
-          Snackbar.show({
-            text: translate('common.updateLocationMsg', {latitude, longitude}),
-            duration: Snackbar.LENGTH_LONG,
-            backgroundColor: colors.palette.greenPalette.green,
-            numberOfLines: 7,
-          });
-        },
-        error => console.log(error),
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
+      getCurrentPosition();
     }, 60000);
     return () => {
       clearInterval(intervalId);
